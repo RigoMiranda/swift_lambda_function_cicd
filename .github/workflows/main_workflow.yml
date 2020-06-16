@@ -1,11 +1,14 @@
 
 name: Main Workflow
-
 on:
   push:
     branches: [ master ]
 jobs:
   build:
+    strategy:
+      matrix:
+        node_version: [12.x]
+        python_version: [3.8.x]
     runs-on: ubuntu-20.04
 
     steps:
@@ -42,3 +45,36 @@ jobs:
         source  ~/.bashrc
 
         swift --version
+
+    # We need to AWS CLI to configure the account and profile credentials.
+    # Note: The --profile {default} needs to be the same that the profileName in the init.sh
+    - name: Install AWS CLI & Configuring Profile Credentials
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        sudo apt-get install awscli
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
+        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
+        aws configure set default.region us-east-1
+
+    - name: Installing AWS CDK
+      uses: actions/setup-node@v1
+      with:
+        version: ${{ matrix.node_version }}
+        run: |
+          sudo npm install -g aws-cdk
+          cdk --version
+
+    - name: Deploying Infrastructure
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python_version }}
+        run : |
+          cd infrastucture/
+
+          python3 -m venv .env
+          source .env/bin/activate
+          pip3 install -r requirements.txt
+
+          cdk synth
