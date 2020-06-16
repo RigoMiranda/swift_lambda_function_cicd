@@ -15,7 +15,7 @@ jobs:
       run: |
 
         # Dependencies:
-        apt-get install \
+        sudo apt-get install \
           binutils \
           git \
           gnupg2 \
