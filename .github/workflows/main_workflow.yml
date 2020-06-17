@@ -53,7 +53,13 @@ jobs:
         source  ~/.bashrc
         cd swift-aws-lambda-square-number/
         swift build --product SquareNumber -c release
-        scripts/_package.sh SquareNumber
+        
+        run \
+          --rm \
+          --volume "$(pwd)/:/src" \
+          --workdir "/src/" \
+          swift-lambda-builder \
+          scripts/_package.sh SquareNumber
 
     # We need to AWS CLI to configure the account and profile credentials.
     # Note: The --profile {default} needs to be the same that the profileName in the init.sh
