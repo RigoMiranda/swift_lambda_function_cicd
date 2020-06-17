@@ -42,14 +42,14 @@ jobs:
         tar xzf swift-5.2.4-RELEASE-ubuntu20.04.tar.gz
         sudo mv swift-5.2.4-RELEASE-ubuntu20.04 /usr/share/swift
 
-        echo "export PATH=/usr/share/swift/usr/bin:$PATH" >> ~/.bashrc
+        echo "export PATH=/usr/swift/usr/bin:$PATH" >> ~/.bashrc
         source  ~/.bashrc
 
         swift --version
         
     - name: Build Swift Lambda
       run: |
-        echo "export PATH=/usr/share/swift/usr/bin:$PATH" >> ~/.bashrc
+        echo "export PATH=/usr/swift/usr/bin:$PATH" >> ~/.bashrc
         source  ~/.bashrc
         cd swift-aws-lambda-square-number/
         swift build --product SquareNumber -c release
