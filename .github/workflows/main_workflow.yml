@@ -50,6 +50,7 @@ jobs:
     - name: Build Swift Lambda
       run: |
         cd swift-aws-lambda-square-number/
+        swift build --product SquareNumber -c release
         scripts/_package.sh SquareNumber
 
     # We need to AWS CLI to configure the account and profile credentials.
