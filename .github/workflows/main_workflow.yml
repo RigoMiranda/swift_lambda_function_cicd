@@ -10,7 +10,7 @@ jobs:
       matrix:
         node_version: [12.x]
         python_version: [3.8.x]
-    runs-on: macos-latest #ubuntu-20.04
+    runs-on: ubuntu-20.04
 
     steps:
     - uses: actions/checkout@v2
@@ -18,34 +18,36 @@ jobs:
     - name: Install Swift 
       run: |
 
-        # # Dependencies:
-        # sudo apt-get install \
-        #   binutils \
-        #   git \
-        #   gnupg2 \
-        #   libc6-dev \
-        #   libcurl4 \
-        #   libedit2 \
-        #   libgcc-9-dev \
-        #   libpython2.7 \
-        #   libsqlite3-0 \
-        #   libstdc++-9-dev \
-        #   libxml2 \
-        #   libz3-dev \
-        #   pkg-config \
-        #   tzdata \
-        #   zlib1g-dev
+        # Dependencies:
+        sudo apt-get install \
+          binutils \
+          git \
+          gnupg2 \
+          libc6-dev \
+          libcurl4 \
+          libedit2 \
+          libgcc-9-dev \
+          libpython2.7 \
+          libsqlite3-0 \
+          libstdc++-9-dev \
+          libxml2 \
+          libz3-dev \
+          pkg-config \
+          tzdata \
+          zlib1g-dev
 
         # Download Swift:
-        # wget https://swift.org/builds/swift-5.2.4-release/ubuntu2004/swift-5.2.4-RELEASE/swift-5.2.4-RELEASE-ubuntu20.04.tar.gz
+        wget https://swift.org/builds/swift-5.2.4-release/ubuntu2004/swift-5.2.4-RELEASE/swift-5.2.4-RELEASE-ubuntu20.04.tar.gz
 
-        # tar xzf swift-5.2.4-RELEASE-ubuntu20.04.tar.gz
-        # sudo mv swift-5.2.4-RELEASE-ubuntu20.04 /usr/share/swift
+        tar xzf swift-5.2.4-RELEASE-ubuntu20.04.tar.gz
+        sudo mv swift-5.2.4-RELEASE-ubuntu20.04 /usr/share/swift
 
-        # echo "export PATH=/usr/swift/usr/bin:$PATH" >> ~/.bashrc
-        # source  ~/.bashrc
-        sudo installer ?pkg downloads/swift-5.2.4-release-osx.pkg -target /  
+        echo "export PATH=/usr/swift/usr/bin:$PATH" >> ~/.bashrc
+        source  ~/.bashrc
+
         swift --version
+        
+        docker pull swiftlang/swift:nightly-master-slim
         
     - name: Build Swift Lambda
       run: |
