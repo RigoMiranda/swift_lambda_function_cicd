@@ -18,7 +18,7 @@ jobs:
     - name:  Download Swift Docker Image & Build Swift Lambda
       run: |
       
-        echo "** Downloading Swify Docker **"
+        echo "** Downloading Swift Docker **"
         docker pull swiftlang/swift:nightly-master-slim
         
         echo "** Changing Dir **"
@@ -27,13 +27,13 @@ jobs:
         echo "** Docker Build **"
         docker build -t swift-lambda-builder .
         
-        echo "Build Swify"
+        echo "Build Swift"
         docker run \
-         --rm \
-         --volume "$(pwd)/:/src" \
-         --workdir "/src/" \
-         swift-lambda-builder \
-         swift build --product SquareNumber -c release
+        --rm \
+        --volume "$(pwd)/:/src" \
+        --workdir "/src/" \
+        swift-lambda-builder \
+        swift build --product SquareNumber -c release
         
         docker run \
         --rm \
@@ -44,37 +44,37 @@ jobs:
 
     # We need to AWS CLI to configure the account and profile credentials.
     # Note: The --profile {default} needs to be the same that the profileName in the init.sh
-#     - name: Install AWS CLI & Configuring Profile Credentials
-#       env:
-#         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#       run: |
-#         sudo apt-get install awscli
-#         # aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
-#         # aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
-#         # aws configure set default.region us-east-1
+    - name: Install AWS CLI & Configuring Profile Credentials
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        sudo apt-get install awscli
+        # aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
+        # aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
+        # aws configure set default.region us-east-1
 
-#     - name: Use Node.js ${{ matrix.node_version }}
-#       uses: actions/setup-node@v1
-#       with:
-#         version: ${{ matrix.node_version }}
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        version: ${{ matrix.node_version }}
 
-#     - name: Installing AWS CDK
-#       run: |
-#         sudo npm install -g aws-cdk
-#         cdk --version
+    - name: Installing AWS CDK
+      run: |
+        sudo npm install -g aws-cdk
+        cdk --version
 
-#     - name: Set up Python ${{ matrix.python_version }}
-#       uses: actions/setup-python@v2
-#       with:
-#         python-version: ${{ matrix.python_version }}
+    - name: Set up Python ${{ matrix.python_version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python_version }}
     
-#     - name: Deploying Infrastructure
-#       run : |
-#         cd infrastucture/
+    - name: Deploying Infrastructure
+      run : |
+        cd infrastucture/
 
-#         python3 -m venv .env
-#         source .env/bin/activate
-#         pip3 install -r requirements.txt
+        python3 -m venv .env
+        source .env/bin/activate
+        pip3 install -r requirements.txt
 
-#         cdk synth
+        cdk synth
