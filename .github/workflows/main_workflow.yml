@@ -18,12 +18,16 @@ jobs:
     - name:  Download Swift Docker Image & Build Swift Lambda
       run: |
       
+        echo "Downloading Swify Docker"
         docker pull swiftlang/swift:nightly-master-slim
         
+        echo "Changing Dir"
         cd swift-aws-lambda-square-number/
         
+        echo "Docker Build"
         docker build -t swift-lambda-builder .
         
+        echo "Build Swify"
         docker run \
         --rm \
         --volume "$(pwd)/:/src" \
