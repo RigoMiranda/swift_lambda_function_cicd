@@ -35,23 +35,12 @@ jobs:
          swift-lambda-builder \
          swift build --product SquareNumber -c release
         
-        set -eu
-        executable=$1
-        target=.build/lambda/$executable
-        rm -rf "$target"
-        mkdir -p "$target"
-        cp ".build/release/$executable" "$target/"
-        cp -Pv \
-          /usr/lib/swift/linux/libBlocksRuntime.so \
-          /usr/lib/swift/linux/libFoundation*.so \
-          /usr/lib/swift/linux/libdispatch.so \
-          /usr/lib/swift/linux/libicu* \
-          /usr/lib/swift/linux/libswiftCore.so \
-          /usr/lib/swift/linux/libswiftDispatch.so \
-          /usr/lib/swift/linux/libswiftGlibc.so \
-          "$target"
-        cd "$target"
-        ln -s "$executable" "bootstrap"
+        docker run \
+        --rm \
+        --volume "$(pwd)/:/src" \
+        --workdir "/src/" \
+        swift-lambda-builder \
+        scripts/_package.sh SquareNumber
 
     # We need to AWS CLI to configure the account and profile credentials.
     # Note: The --profile {default} needs to be the same that the profileName in the init.sh
