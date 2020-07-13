@@ -19,4 +19,4 @@ cp -Pv \
   "$target"
 cd "$target"
 ln -s "$executable" "bootstrap"
-zip --symlinks lambda.zip *
+# zip --symlinks lambda.zip *
