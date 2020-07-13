@@ -17,7 +17,7 @@ jobs:
         
     - name:  Download Swift Docker Image & Build Swift Lambda
       run: |
-         
+      
         docker pull swiftlang/swift:nightly-master-slim
         
         docker run \
