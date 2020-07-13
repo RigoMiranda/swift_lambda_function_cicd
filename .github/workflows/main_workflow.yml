@@ -50,9 +50,9 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         sudo apt-get install awscli
-        # aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
-        # aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
-        # aws configure set default.region us-east-1
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile default
+        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY --profile default
+        aws configure set default.region us-east-1
 
     - name: Use Node.js ${{ matrix.node_version }}
       uses: actions/setup-node@v1
