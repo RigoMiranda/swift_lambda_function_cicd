@@ -17,15 +17,14 @@ jobs:
         
     - name:  Download Swift Docker Image & Build Swift Lambda
       run: |
-        
-        cd swift-aws-lambda-square-number
-        
+         
         docker pull swiftlang/swift:nightly-master-slim
         
         docker run \
         --rm \
         --volume "$(pwd)/:/src" \
         --workdir "/src/" \
+        cd swift-aws-lambda-square-number \
         swift build --product SquareNumber -c release
         
         set -eu
