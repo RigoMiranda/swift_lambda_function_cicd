@@ -14,12 +14,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
-    - name: Download Swift Docker Image 
-      run: docker pull swiftlang/swift:nightly-master-slim
         
-    - name: Build Swift Lambda
+    - name:  Download Swift Docker Image & Build Swift Lambda
       run: |
+        
+        docker pull swiftlang/swift:nightly-master-slim
+        
         docker run \
         --rm \
         --volume "$(pwd)/:/src" \
