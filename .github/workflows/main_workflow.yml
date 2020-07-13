@@ -20,11 +20,15 @@ jobs:
       
         docker pull swiftlang/swift:nightly-master-slim
         
+        cd swift-aws-lambda-square-number/
+        
+        docker build -t swift-lambda-builder .
+        
         docker run \
         --rm \
         --volume "$(pwd)/:/src" \
         --workdir "/src/" \
-        cd swift-aws-lambda-square-number \
+        cd swift-lambda-builder \
         swift build --product SquareNumber -c release
         
         set -eu
