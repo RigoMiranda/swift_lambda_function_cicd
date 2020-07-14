@@ -14,7 +14,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-        
+    
+    # TODO: Cache Docker Image:
     - name:  Download Swift Docker Image & Build Swift Lambda
       run: |
       
@@ -40,7 +41,7 @@ jobs:
         --volume "$(pwd)/:/src" \
         --workdir "/src/" \
         swift-lambda-builder \
-        scripts/_package.sh SquareNumber
+        scripts/package.sh SquareNumber
 
     # We need to AWS CLI to configure the account and profile credentials.
     # Note: The --profile {default} needs to be the same that the profileName in the init.sh
@@ -71,7 +72,7 @@ jobs:
     
     - name: Deploying Infrastructure
       run : |
-        cd infrastucture/
+        cd infrastructure/
 
         python3 -m venv .env
         source .env/bin/activate

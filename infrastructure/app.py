@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from aws_cdk import core
-
 from swift_lambda.swift_lambda_stack import SwiftLambdaCdkStack
 
 app = core.App()
